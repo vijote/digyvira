@@ -1,10 +1,14 @@
 <script>
     /** @type {(event: MouseEvent & { currentTarget: EventTarget & SVGSVGElement; }) => void} */
     export let onMouseDown;
+
+    /** @type {(event: MouseEvent & { currentTarget: EventTarget & SVGSVGElement; }) => void} */
+    export let onClick;
 </script>
 
 <svg
     on:mousedown={onMouseDown}
+    on:click={onClick}
     fill="#000"
     data-testid="female-member-icon"
     version="1.1"

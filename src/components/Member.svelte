@@ -1,13 +1,22 @@
 <script>
-  import { ItemType } from "../entities/enums";
+  import { ItemType, MemberType } from "../entities/enums";
   import { setMovement } from "../stores/movement.store";
-  import FemaleMember from "./icons/FemaleMember.svelte";
+  import { setSelection } from "../stores/selection.store";
+  import FemaleIcon from "./icons/FemaleIcon.svelte";
+  import MaleIcon from "./icons/MaleIcon.svelte";
 
   /**  @type {import("../stores/memberList.store").Member} */
   export let data;
 
+  let mouseDownTimestamp = 0;
+
+  const memberDictionary = {
+    [MemberType.Male]: MaleIcon,
+    [MemberType.Female]: FemaleIcon,
+  };
+
   const handleMouseDown = (/** @type {MouseEvent} */ event) => {
-    if (!event.target) return;
+    mouseDownTimestamp = Date.now();
 
     setMovement(() => ({
       isDragging: true,
@@ -21,6 +30,19 @@
       offsetY: event.clientY - event.target.getBoundingClientRect().top,
     }));
   };
+
+  const handleClick = (/** @type {MouseEvent} */ event) => {
+    event.stopPropagation();
+
+    const elapsedTime = Date.now() - mouseDownTimestamp;
+
+    if (elapsedTime > 300) return;
+
+    setSelection({
+      element: data.element,
+      type: ItemType.Member,
+    });
+  };
 </script>
 
 <div
@@ -28,15 +50,20 @@
   role="cell"
   tabindex="0"
   bind:this={data.element}
-  class="grid-item"
-  style="position: absolute; top: {data.y}px; left: {data.x}px"
+  class="member"
+  style="top: {data.y}px; left: {data.x}px"
 >
-  <FemaleMember onMouseDown={handleMouseDown} />
+  <svelte:component
+    this={memberDictionary[data.type]}
+    onMouseDown={handleMouseDown}
+    onClick={handleClick}
+  />
 </div>
 
 <style>
-  .grid-item {
+  .member {
     width: 100px;
     height: 100px;
+    position: absolute;
   }
 </style>

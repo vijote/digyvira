@@ -16,7 +16,7 @@ export function addMember() {
         x: 0,
         y: 0,
         element: null,
-        type: MemberType.Male
+        type: MemberType.Female
     }])
 }
 
@@ -24,6 +24,14 @@ export const moveMemberByElement = (/** @type {{x: number, y: number, element: H
     memberList.update(currentList => {
         const memberIndex = currentList.findIndex(member => member.element === element);
         currentList[memberIndex] = { ...currentList[memberIndex], x, y };
+        return currentList;
+    });
+}
+
+export const updateType = (/** @type {HTMLElement} */ element, /** @type {string} */ newType) => {
+    memberList.update(currentList => {
+        const memberIndex = currentList.findIndex(member => member.element === element);
+        currentList[memberIndex] = { ...currentList[memberIndex], type: newType };
         return currentList;
     });
 }

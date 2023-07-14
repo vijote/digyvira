@@ -1,6 +1,7 @@
 <script>
   import { ItemType } from "../entities/enums";
   import { setMovement } from "../stores/movement.store";
+    import { setSelection } from "../stores/selection.store";
 
   /**  @type {import("../stores/lineList.store").Line} */
   export let line;
@@ -44,11 +45,17 @@
     }));
   }
 
-  const handleLineClick = () => {
+  const handleClick = (/** @type {MouseEvent} */ event) => {
+    event.stopPropagation();
+
     const elapsedTime = Date.now() - mouseDownTimestamp;
 
     if (elapsedTime > 300) return;
-    console.log("line click!");
+
+    setSelection({
+      element: line.element,
+      type: ItemType.Line
+    });
   };
 </script>
 
@@ -68,7 +75,7 @@
     height={Math.abs(line.y2 - line.y1) + 20}
     fill="transparent"
     id="selector"
-    on:click={handleLineClick}
+    on:click={handleClick}
     on:mousedown={handleLineMouseDown}
     data-item={ItemType.Line}
     bind:this={line.element}

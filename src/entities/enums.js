@@ -5,5 +5,6 @@ export const ItemType = {
 }
 
 export const MemberType = {
-    Male: 'male'
+    Male: 'male',
+    Female: 'female'
 }

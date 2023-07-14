@@ -15,5 +15,6 @@
         margin: 0;
         padding: 0;
         height: 100%;
+        font-family: Helvetica, Arial, sans-serif;
     }
 </style>

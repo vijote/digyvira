@@ -7,18 +7,14 @@
     import Member from "./Member.svelte";
     import { ItemType } from "../entities/enums";
     import DragIcon from "./DragIcon.svelte";
-    import FemaleMember from "./icons/FemaleMember.svelte";
+    import FemaleIcon from "./icons/FemaleIcon.svelte";
     import Sidebar from "./Sidebar.svelte";
     import LineIcon from "./icons/LineIcon.svelte";
-
-    let sidebarOpen = false;
+    import { resetSelection, selection } from "../stores/selection.store";
+    import MemberSidebar from "./MemberSidebar.svelte";
 
     function addLine() {
         addNewLine({ x1: 20, x2: 200, y1: 20, y2: 20, element: null });
-    }
-
-    function handleMouseUp() {
-        resetMovement();
     }
 
     function handleMouseMove(/** @type {MouseEvent} */ event) {
@@ -38,11 +34,11 @@
 </script>
 
 <!-- Global listeners -->
-<svelte:document on:mouseup={handleMouseUp} on:mousemove={handleMouseMove} />
+<svelte:document on:mouseup={resetMovement} on:mousemove={handleMouseMove} />
 
 <div class="drag-box">
     <DragIcon onClick={addMember}>
-        <FemaleMember onMouseDown={() => {}}/>
+        <FemaleIcon onClick={() => {}} onMouseDown={() => {}}/>
     </DragIcon>
     <DragIcon onClick={addLine}>
         <LineIcon/>
@@ -53,16 +49,18 @@
 {#each $memberList as member}
     <Member data={member} />
 {/each}
-<svg width="100%" height="100%">
+<svg width="100%" height="100%" on:click={resetSelection}>
     {#each $lineList as lineData}
         <Line line={lineData} />
     {/each}
 </svg>
 
 
-{#if sidebarOpen}
+{#if $selection.element !== null}
     <Sidebar>
-        texto
+        {#if $selection.type === "member"}
+            <MemberSidebar/>
+        {/if}
     </Sidebar>
 {/if}
 
