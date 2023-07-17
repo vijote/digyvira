@@ -1,7 +1,7 @@
 <script>
   import { ItemType, MemberType } from "../entities/enums";
   import { setMovement } from "../stores/movement.store";
-  import { setSelection } from "../stores/selection.store";
+  import { selectItem } from "../stores/selection.store";
   import FemaleIcon from "./icons/FemaleIcon.svelte";
   import MaleIcon from "./icons/MaleIcon.svelte";
 
@@ -38,7 +38,7 @@
 
     if (elapsedTime > 300) return;
 
-    setSelection({
+    selectItem({
       element: data.element,
       type: ItemType.Member,
     });
@@ -62,8 +62,8 @@
 
 <style>
   .member {
-    width: 100px;
-    height: 100px;
+    width: 60px;
+    height: 60px;
     position: absolute;
   }
 </style>

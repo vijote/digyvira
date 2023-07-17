@@ -1,7 +1,8 @@
 export const ItemType = {
     Member: 'member',
     Line: 'line',
-    LineHandler: 'line-handler'
+    HorizontalLineHandler: 'horizontal-line-handler',
+    VerticalLineHandler: 'vertical-line-handler'
 }
 
 export const MemberType = {

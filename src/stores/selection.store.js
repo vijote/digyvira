@@ -9,7 +9,7 @@ import { writable } from 'svelte/store';
 /** @type {import("svelte/store").Writable<Selection>} */
 export const selection = writable({ element: null, type: 'unset' });
 
-export function setSelection(/** @type {Selection} */ newSelection) {
+export function selectItem(/** @type {Selection} */ newSelection) {
     selection.update(() => newSelection);
 }
 

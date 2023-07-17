@@ -16,5 +16,12 @@
         padding: 0;
         height: 100%;
         font-family: Helvetica, Arial, sans-serif;
+        background-image: linear-gradient(
+                to right,
+                rgb(216, 216, 216) 1px,
+                transparent 1px
+            ),
+            linear-gradient(to bottom, rgb(216, 216, 216) 1px, transparent 1px);
+        background-size: 20px 20px; /* Adjust the size based on your grid cell size */
     }
 </style>

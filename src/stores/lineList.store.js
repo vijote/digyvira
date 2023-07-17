@@ -6,6 +6,7 @@ import { writable } from 'svelte/store';
  * @property {number} x2
  * @property {number} y1
  * @property {number} y2
+ * @property {string} type
  * @property {SVGRectElement | null} element
  */
 
@@ -16,15 +17,6 @@ export function addNewLine(/** @type {Line} */ newLine) {
     lineList.update(currentList => [...currentList, newLine]);
 }
 
-export const moveLine =
-    (/** @type {number} */ positionIndex) =>
-        (/** @type {{x1: number, x2: number, y1: number, y2: number }} */ { x1, x2, y1, y2 }) => {
-            lineList.update((currentList) => {
-                currentList[positionIndex] = { x1, x2, y1, y2, element: currentList[positionIndex].element };
-                return currentList;
-            });
-        };
-
 export const moveLineByElement =
     (/** @type {{x: number, y: number, element: SVGRectElement }} */ { x, y, element }) => {
         lineList.update((currentList) => {
@@ -33,9 +25,9 @@ export const moveLineByElement =
             const width = currentLine.x2 - currentLine.x1;
             const height = currentLine.y2 - currentLine.y1;
             currentList[lineIndex] = {
+                ...currentList[lineIndex],
                 x1: x,
                 y1: y,
-                element: currentList[lineIndex].element,
                 x2: x + width,
                 y2: y + height
             };
@@ -43,16 +35,35 @@ export const moveLineByElement =
         });
     };
 
-export const moveLineByHandler = (/** @type {{x: number, y: number, element: SVGRectElement, handler: string }} */ { x, y, element, handler }) => {
+export const moveHorizontalLineByHandler = (/** @type {{x: number, y: number, element: SVGRectElement, handler: string }} */ { x, y, element, handler }) => {
     lineList.update((currentList) => {
         const lineIndex = currentList.findIndex(line => line.element === element);
         const dataToUpdate = {};
 
         if(handler === 'left') {
             dataToUpdate.x1 = x;
-            dataToUpdate.y1 = y;
         } else if(handler === 'right') {
             dataToUpdate.x2 = x;
+        }
+        
+        const currentLine = currentList[lineIndex];
+        
+        currentList[lineIndex] = {
+            ...currentLine,
+            ...dataToUpdate
+        };
+        return currentList;
+    });
+};
+
+export const moveVerticalLineByHandler = (/** @type {{x: number, y: number, element: SVGRectElement, handler: string }} */ { x, y, element, handler }) => {
+    lineList.update((currentList) => {
+        const lineIndex = currentList.findIndex(line => line.element === element);
+        const dataToUpdate = {};
+
+        if(handler === 'left') {
+            dataToUpdate.y1 = y;
+        } else if(handler === 'right') {
             dataToUpdate.y2 = y;
         }
         
