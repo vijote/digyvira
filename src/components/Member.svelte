@@ -5,8 +5,11 @@
   import FemaleIcon from "./icons/FemaleIcon.svelte";
   import MaleIcon from "./icons/MaleIcon.svelte";
 
-  /**  @type {import("../stores/memberList.store").Member} */
+  /**  @type {import("../entities/initialTree").MemberData} */
   export let data;
+
+  /**  @type {`${string}-${string}-${string}-${string}-${string}`} */
+  export let id;
 
   let mouseDownTimestamp = 0;
 
@@ -22,7 +25,7 @@
       isDragging: true,
       itemType: ItemType.Member,
       // @ts-ignore
-      element: data.element,
+      id,
       handlerSelected: false,
       // @ts-ignore
       offsetX: event.clientX - event.target.getBoundingClientRect().left,
@@ -39,17 +42,16 @@
     if (elapsedTime > 300) return;
 
     selectItem({
-      element: data.element,
+      id,
       type: ItemType.Member,
     });
   };
 </script>
 
 <div
-  data-item={ItemType.Member}
+  data-id={id}
   role="cell"
   tabindex="0"
-  bind:this={data.element}
   class="member"
   style="top: {data.y}px; left: {data.x}px"
 >
@@ -62,8 +64,8 @@
 
 <style>
   .member {
-    width: 60px;
-    height: 60px;
+    width: 40px;
+    height: 40px;
     position: absolute;
   }
 </style>

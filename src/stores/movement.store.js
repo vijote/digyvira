@@ -1,11 +1,12 @@
 import { writable } from 'svelte/store';
+import { EMPTY_ID } from '../entities/enums';
 
 /**
  * @typedef Movement
  * @property {boolean} isDragging
  * @property {number} offsetY
  * @property {number} offsetX
- * @property {HTMLElement | SVGRectElement | null} element
+ * @property {`${string}-${string}-${string}-${string}-${string}`} id
  * @property {string | null} itemType
  * @property {string | false} handlerSelected
  */
@@ -17,7 +18,7 @@ export const movement = writable({
     isDragging: false,
     offsetY: 0,
     offsetX: 0,
-    element: null,
+    id: EMPTY_ID,
     itemType: null,
     handlerSelected: false
 });
@@ -43,7 +44,7 @@ export function resetMovement() {
         isDragging: false,
         offsetY: 0,
         offsetX: 0,
-        element: null,
+        id: EMPTY_ID,
         itemType: null,
         handlerSelected: false
     }));

@@ -6,10 +6,13 @@
     /** @type {import("../stores/lineList.store").Line} */
     export let data;
 
+    /**  @type {`${string}-${string}-${string}-${string}-${string}`} */
+    export let id;
+
     const lineDictionary = {
-        [ItemType.HorizontalLineHandler]: HorizontalLine,
-        [ItemType.VerticalLineHandler]: VerticalLine,
+        [ItemType.HorizontalLine]: HorizontalLine,
+        [ItemType.VerticalLine]: VerticalLine,
     };
 </script>
 
-<svelte:component this={lineDictionary[data.type]} line={data} />
+<svelte:component this={lineDictionary[data.type]} line={data} {id} />

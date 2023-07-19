@@ -1,18 +1,19 @@
 import { writable } from 'svelte/store';
+import { EMPTY_ID } from '../entities/enums';
 
 /**
  * @typedef Selection
- * @property {HTMLElement | SVGRectElement | null} element
+ * @property {`${string}-${string}-${string}-${string}-${string}`} id
  * @property {string} type
  */
 
 /** @type {import("svelte/store").Writable<Selection>} */
-export const selection = writable({ element: null, type: 'unset' });
+export const selection = writable({ id: EMPTY_ID, type: 'unset' });
 
 export function selectItem(/** @type {Selection} */ newSelection) {
     selection.update(() => newSelection);
 }
 
 export function resetSelection() {
-    selection.update(() => ({ element: null, type: 'unset' }));
+    selection.update(() => ({ id: EMPTY_ID, type: 'unset' }));
 }

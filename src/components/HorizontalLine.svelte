@@ -6,6 +6,9 @@
   /**  @type {import("../stores/lineList.store").Line} */
   export let line;
 
+  /**  @type {`${string}-${string}-${string}-${string}-${string}`} */
+  export let id;
+
   let mouseDownTimestamp = 0;
   let isHovered = false;
 
@@ -23,8 +26,8 @@
     setMovement(() => ({
       isDragging: true,
       itemType: ItemType.Line,
-      // @ts-ignore
-      element: event.target,
+      id,
+      handlerSelected: false,
       // @ts-ignore
       offsetX: event.clientX - event.target.getBoundingClientRect().left - 20,
       // @ts-ignore
@@ -38,7 +41,7 @@
       setMovement(() => ({
         isDragging: true,
         itemType: ItemType.HorizontalLineHandler,
-        element: line.element,
+        id,
         // @ts-ignore
         offsetX: event.clientX - event.target.getBoundingClientRect().left - 20,
         // @ts-ignore
@@ -55,7 +58,7 @@
     if (elapsedTime > 300) return;
 
     selectItem({
-      element: line.element,
+      id,
       type: ItemType.Line,
     });
   };
@@ -88,10 +91,9 @@ transform: translateY(-50%);">
       width={Math.abs(line.x2 - line.x1) + 20}
       height={20}
       fill="transparent"
-      id="selector"
       on:click={handleClick}
       on:mousedown={handleLineMouseDown}
-      data-item={ItemType.Line}
+      data-id={id}
       bind:this={line.element}
     />
     {#if isHovered}
@@ -102,7 +104,6 @@ transform: translateY(-50%);">
         height="10"
         fill="grey"
         cursor="move"
-        data-item={ItemType.HorizontalLineHandler}
         data-handler="left"
         on:mousedown={handleHandlerMouseDown("left")}
       />
@@ -113,16 +114,9 @@ transform: translateY(-50%);">
         height="10"
         fill="blue"
         cursor="move"
-        data-item={ItemType.HorizontalLineHandler}
         data-handler="right"
         on:mousedown={handleHandlerMouseDown("right")}
       />
     {/if}
   </g>
 </svg>
-
-<style>
-  .line-container {
-    
-  }
-</style>

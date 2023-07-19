@@ -1,17 +1,17 @@
 <script>
     import { MemberType } from "../entities/enums";
-    import { updateType } from "../stores/memberList.store";
+    import { changeMemberType } from "../stores/itemList.store";
     import { resetSelection, selection } from "../stores/selection.store";
     import FemaleIcon from "./icons/FemaleIcon.svelte";
     import MaleIcon from "./icons/MaleIcon.svelte";
 
     function setTypeToFemale() {
-        updateType($selection.element, MemberType.Female);
+        changeMemberType($selection.id, MemberType.Female);
         resetSelection();
     }
 
     function setTypeToMale() {
-        updateType($selection.element, MemberType.Male);
+        changeMemberType($selection.id, MemberType.Male);
         resetSelection();
     }
 </script>
