@@ -8,7 +8,7 @@ import { EMPTY_ID } from '../entities/enums';
  * @property {number} offsetX
  * @property {`${string}-${string}-${string}-${string}-${string}`} id
  * @property {string | null} itemType
- * @property {string | false} handlerSelected
+ * @property {string} handlerSelected
  */
 
 /**
@@ -20,7 +20,7 @@ export const movement = writable({
     offsetX: 0,
     id: EMPTY_ID,
     itemType: null,
-    handlerSelected: false
+    handlerSelected: EMPTY_ID
 });
 
 export function setMovement( /** @type {(currMovement: Movement) => Movement} */ callback) {
@@ -46,6 +46,6 @@ export function resetMovement() {
         offsetX: 0,
         id: EMPTY_ID,
         itemType: null,
-        handlerSelected: false
+        handlerSelected: EMPTY_ID
     }));
 }

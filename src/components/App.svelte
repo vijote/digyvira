@@ -50,7 +50,7 @@
         });
     }
 
-    export function addNewMember() {
+    function addNewMember() {
         addMember({
             type: MemberType.Female,
             x: 0,
