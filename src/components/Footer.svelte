@@ -14,14 +14,21 @@
         URL.revokeObjectURL(url);
     }
 
-    function handleFileChange(event) {
+    function handleFileChange( /** @type {Event & { target: HTMLInputElement }} */ event) {
+        if(!event.target) throw new Error("No se pudo leer el arbol.");
+        if(!event.target.files) throw new Error("No se pudo leer el arbol.");
+        
         const file = event.target.files[0];
         const reader = new FileReader();
 
         reader.onload = () => {
             const jsonData = reader.result;
-            const data = JSON.parse(jsonData);
-            initializeTree(data);
+
+            if(typeof jsonData !== 'string') throw new Error("No se pudo leer el arbol.");
+
+            /** @type {[string, import('../entities/initialTree').StoredItem][]} */
+            const treeData = JSON.parse(jsonData);
+            initializeTree(new Map(treeData));
         };
 
         reader.readAsText(file);
