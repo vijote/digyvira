@@ -9,15 +9,15 @@ import { ItemType } from '../entities/enums';
      */
 
 /** @type {import("svelte/store").Writable<Map<string, import('../entities/initialTree').StoredItem>>} */
-export const itemTree = writable(new Map([]));
+export const tree = writable(new Map([]));
 
 export function initializeTree(/** @type {Map<string, import('../entities/initialTree').StoredItem>} */ newTree) {
-    itemTree.update(() => newTree)
+    tree.update(() => newTree)
 }
 
 function addItem(/** @type {import('../entities/initialTree').NewItem} */ newItem) {
     const id = crypto.randomUUID();
-    itemTree.update(currentList => {
+    tree.update(currentList => {
         currentList.set(id, {...newItem, id});
         return currentList;
     });
@@ -38,7 +38,7 @@ export function addLine(/** @type {import('../entities/initialTree').NewLine} */
 }
 
 export function moveMemberById(/** @type {{x: number, y: number, id: `${string}-${string}-${string}-${string}-${string}` }} */ movement) {
-    itemTree.update(currentTree => {
+    tree.update(currentTree => {
         /** @type {import('../entities/initialTree').StoredMember} */
         // @ts-ignore
         const member = currentTree.get(movement.id);
@@ -48,7 +48,7 @@ export function moveMemberById(/** @type {{x: number, y: number, id: `${string}-
 }
 
 export const changeMemberType = (/** @type {`${string}-${string}-${string}-${string}-${string}`} */ id, /** @type {string} */ newType) => {
-    itemTree.update(currentTree => {
+    tree.update(currentTree => {
         /** @type {import('../entities/initialTree').StoredMember} */
         // @ts-ignore
         const member = currentTree.get(id);
@@ -60,7 +60,7 @@ export const changeMemberType = (/** @type {`${string}-${string}-${string}-${str
 
 export const moveLineById =
 (/** @type {{x: number, y: number, id: `${string}-${string}-${string}-${string}-${string}` }} */ { x, y, id }) => {
-    itemTree.update((currentTree) => {
+    tree.update((currentTree) => {
         /** @type {import('../entities/initialTree').StoredLine} */
         // @ts-ignore
         const line = currentTree.get(id);
@@ -84,7 +84,7 @@ export const moveLineById =
 };
 
 export const moveHorizontalLineByHandler = (/** @type {{x: number, y: number, id: `${string}-${string}-${string}-${string}-${string}`, handler: string }} */ { x, id, handler }) => {
-    itemTree.update((currentTree) => {
+    tree.update((currentTree) => {
         /** @type {import('../entities/initialTree').StoredLine} */
         // @ts-ignore
         const line = currentTree.get(id);
@@ -110,7 +110,7 @@ export const moveHorizontalLineByHandler = (/** @type {{x: number, y: number, id
 };
 
 export const moveVerticalLineByHandler = (/** @type {{x: number, y: number, id: `${string}-${string}-${string}-${string}-${string}`, handler: string }} */ { y, id, handler }) => {
-    itemTree.update((currentTree) => {
+    tree.update((currentTree) => {
         /** @type {import('../entities/initialTree').StoredLine} */
         // @ts-ignore
         const line = currentTree.get(id);

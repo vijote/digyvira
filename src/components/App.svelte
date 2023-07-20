@@ -8,7 +8,7 @@
     import { selection } from "../stores/selection.store";
     import {
         initializeTree,
-        itemTree,
+        tree,
         moveLineById,
         moveMemberById,
         moveHorizontalLineByHandler,
@@ -29,6 +29,7 @@
     import BodyHandler from "./BodyHandler.svelte";
     import VerticalLineIcon from "./icons/VerticalLineIcon.svelte";
     import Item from "./Item.svelte";
+    import Footer from "./Footer.svelte";
 
     function addHorizontalLine() {
         addLine({
@@ -100,7 +101,7 @@
     </DragIcon>
 </div>
 
-{#each [...$itemTree] as [_itemId, item]}
+{#each [...$tree] as [_itemId, item]}
     <Item {item} />
 {/each}
 
@@ -111,6 +112,8 @@
         {/if}
     </Sidebar>
 {/if}
+
+<Footer/>
 
 <style>
     ::selection {
@@ -125,7 +128,7 @@
         top: 5%;
 
         /* style */
-        background-color: #fefefe;
+        background-color: #fffdea;
         padding: 1rem 2rem;
         border: 1px solid grey;
         border-right: none;

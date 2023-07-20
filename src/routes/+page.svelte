@@ -16,6 +16,7 @@
         padding: 0;
         height: 100%;
         font-family: Helvetica, Arial, sans-serif;
+        background-color: #fffef4;
         background-image: linear-gradient(
                 to right,
                 rgb(216, 216, 216) 1px,
