@@ -67,6 +67,7 @@
     width: 40px;
     height: 40px;
     position: absolute;
+    cursor: pointer;
   }
 
   .member:hover .member-name {
@@ -77,21 +78,20 @@
     /* positioning */
     position: relative;
     top: -60%;
-    left: 55%;
+    left: 225%;
     transform: translate(-50%, -50%);
     z-index: 4;
 
     /* style */
-    display: none;
-    background-color: #fffef4;
-    border: 1px solid grey;
-    padding: 0.15rem 0.35rem;
+    display: inline-block;
+    font-size: 0.75rem;
+    padding: 0.25rem 0;
     border-radius: 10px;
 
     /* text handling */
     min-width: 10ch;
     width: max-content;
-    max-width: 25ch;
+    max-width: 12ch;
     text-align: center;
     word-wrap: break-word;
   }

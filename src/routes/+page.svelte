@@ -24,10 +24,10 @@
         background-color: #fffef4;
         background-image: linear-gradient(
                 to right,
-                rgb(216, 216, 216) 1px,
+                rgb(234, 234, 234) 1px,
                 transparent 1px
             ),
-            linear-gradient(to bottom, rgb(216, 216, 216) 1px, transparent 1px);
+            linear-gradient(to bottom, rgb(234, 234, 234) 1px, transparent 1px);
         background-size: 20px 20px; /* Adjust the size based on your grid cell size */
     }
 </style>

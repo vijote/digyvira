@@ -15,7 +15,7 @@ export const ItemType = {
 export const EMPTY_ID = 'null-null-null-null-null';
 
 export const FEMALE_NAME = "Miembro Femenino Miembro Femenino Miembro Femenino";
-export const MALE_NAME = "Miembro Masculino";
+export const MALE_NAME = "Ramon Herculano Hernandez N.12|08 +.07|08... +Cancer de higado... Chofer";
 
 /**
  * Possible member types
