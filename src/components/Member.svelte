@@ -1,14 +1,14 @@
 <script>
-  import { ItemType, MemberType } from "../entities/enums";
+  import { EMPTY_ID, ItemType, MemberType } from "../entities/enums";
   import { setMovement } from "../stores/movement.store";
   import { selectItem } from "../stores/selection.store";
   import FemaleIcon from "./icons/FemaleIcon.svelte";
   import MaleIcon from "./icons/MaleIcon.svelte";
 
-  /**  @type {import("../entities/initialTree").MemberData} */
+  /**  @type {MemberData} */
   export let data;
 
-  /**  @type {`${string}-${string}-${string}-${string}-${string}`} */
+  /**  @type {UUID} */
   export let id;
 
   let mouseDownTimestamp = 0;
@@ -21,16 +21,15 @@
   const handleMouseDown = (/** @type {MouseEvent} */ event) => {
     mouseDownTimestamp = Date.now();
 
+    const { target } = /** @type {MouseEvent & { target: SVGSVGElement}} */ (event);
+
     setMovement(() => ({
       isDragging: true,
       itemType: ItemType.Member,
-      // @ts-ignore
       id,
-      handlerSelected: false,
-      // @ts-ignore
-      offsetX: event.clientX - event.target.getBoundingClientRect().left,
-      // @ts-ignore
-      offsetY: event.clientY - event.target.getBoundingClientRect().top,
+      handlerSelected: EMPTY_ID,
+      offsetX: event.clientX - target.getBoundingClientRect().left,
+      offsetY: event.clientY - target.getBoundingClientRect().top,
     }));
   };
 
@@ -60,6 +59,7 @@
     onMouseDown={handleMouseDown}
     onClick={handleClick}
   />
+  <span class="member-name">{data.name}</span>
 </div>
 
 <style>
@@ -67,5 +67,32 @@
     width: 40px;
     height: 40px;
     position: absolute;
+  }
+
+  .member:hover .member-name {
+    /* display: inline-block; */
+  }
+
+  .member-name {
+    /* positioning */
+    position: relative;
+    top: -60%;
+    left: 55%;
+    transform: translate(-50%, -50%);
+    z-index: 4;
+
+    /* style */
+    display: none;
+    background-color: #fffef4;
+    border: 1px solid grey;
+    padding: 0.15rem 0.35rem;
+    border-radius: 10px;
+
+    /* text handling */
+    min-width: 10ch;
+    width: max-content;
+    max-width: 25ch;
+    text-align: center;
+    word-wrap: break-word;
   }
 </style>

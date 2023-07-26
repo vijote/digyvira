@@ -1,5 +1,5 @@
 <script>
-    import { tree, initializeTree } from '../stores/itemList.store';
+    import { tree, initializeTree } from '../stores/tree.store';
 
     function saveTree() {
         const treeEntries = JSON.stringify([...$tree]);
@@ -14,11 +14,12 @@
         URL.revokeObjectURL(url);
     }
 
-    function handleFileChange( /** @type {Event & { target: HTMLInputElement }} */ event) {
-        if(!event.target) throw new Error("No se pudo leer el arbol.");
-        if(!event.target.files) throw new Error("No se pudo leer el arbol.");
+    function handleFileChange( /** @type {Event} */ event) {
+        const { target } = /** @type {Event & { target: HTMLInputElement }} */ (event);
+
+        if(!target.files) return;
         
-        const file = event.target.files[0];
+        const file = target.files[0];
         const reader = new FileReader();
 
         reader.onload = () => {
@@ -26,8 +27,9 @@
 
             if(typeof jsonData !== 'string') throw new Error("No se pudo leer el arbol.");
 
-            /** @type {[string, import('../entities/initialTree').StoredItem][]} */
+            /** @type {[UUID, import('../entities/Item').default][]} */
             const treeData = JSON.parse(jsonData);
+            
             initializeTree(new Map(treeData));
         };
 

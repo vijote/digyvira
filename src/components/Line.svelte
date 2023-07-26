@@ -3,16 +3,16 @@
     import HorizontalLine from "./HorizontalLine.svelte";
     import VerticalLine from "./VerticalLine.svelte";
 
-    /** @type {import("../stores/lineList.store").Line} */
+    /** @type {LineData} */
     export let data;
 
     /**  @type {`${string}-${string}-${string}-${string}-${string}`} */
     export let id;
 
-    const lineDictionary = {
+    const lineComponents = {
         [ItemType.HorizontalLine]: HorizontalLine,
         [ItemType.VerticalLine]: VerticalLine,
     };
 </script>
 
-<svelte:component this={lineDictionary[data.type]} line={data} {id} />
+<svelte:component this={lineComponents[data.type]} line={data} {id} />

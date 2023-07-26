@@ -5,6 +5,11 @@
 <App />
 
 <style>
+    :global(::selection) {
+        background-color: transparent;
+        color: inherit;
+    }
+    
     :global(html) {
         margin: 0;
         padding: 0;

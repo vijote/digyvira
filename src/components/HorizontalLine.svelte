@@ -1,12 +1,12 @@
 <script>
-  import { ItemType } from "../entities/enums";
+  import { EMPTY_ID, ItemType } from "../entities/enums";
   import { setMovement } from "../stores/movement.store";
   import { selectItem } from "../stores/selection.store";
 
-  /**  @type {import("../stores/lineList.store").Line} */
+  /**  @type {LineData} */
   export let line;
 
-  /**  @type {`${string}-${string}-${string}-${string}-${string}`} */
+  /**  @type {UUID} */
   export let id;
 
   let mouseDownTimestamp = 0;
@@ -23,29 +23,30 @@
   const handleLineMouseDown = (/** @type {MouseEvent} */ event) => {
     mouseDownTimestamp = Date.now();
 
+    const { target } = /** @type {MouseEvent & { target: SVGRectElement }} */ (event);
+
     setMovement(() => ({
       isDragging: true,
       itemType: ItemType.Line,
       id,
-      handlerSelected: false,
-      // @ts-ignore
-      offsetX: event.clientX - event.target.getBoundingClientRect().left - 20,
-      // @ts-ignore
-      offsetY: event.clientY - event.target.getBoundingClientRect().top - 20,
+      handlerSelected: EMPTY_ID,
+      offsetX: event.clientX - target.getBoundingClientRect().left - 20,
+      offsetY: event.clientY - target.getBoundingClientRect().top - 20,
     }));
   };
 
   const handleHandlerMouseDown =
     (/** @type {"left" | "right"} */ handler) =>
     (/** @type {MouseEvent} */ event) => {
+
+      const { target } = /** @type {MouseEvent & { target: SVGRectElement }} */ (event);
+
       setMovement(() => ({
         isDragging: true,
         itemType: ItemType.HorizontalLineHandler,
         id,
-        // @ts-ignore
-        offsetX: event.clientX - event.target.getBoundingClientRect().left - 20,
-        // @ts-ignore
-        offsetY: event.clientY - event.target.getBoundingClientRect().top - 20,
+        offsetX: event.clientX - target.getBoundingClientRect().left - 20,
+        offsetY: event.clientY - target.getBoundingClientRect().top - 20,
         handlerSelected: handler,
       }));
     };
@@ -62,6 +63,8 @@
       type: ItemType.Line,
     });
   };
+
+  function handleKeyPress() { }
 </script>
 
 <svg style="position: absolute;
@@ -91,10 +94,12 @@ transform: translateY(-50%);">
       width={Math.abs(line.x2 - line.x1) + 20}
       height={20}
       fill="transparent"
+      role="button"
+      tabindex="0"
       on:click={handleClick}
+      on:keypress={handleKeyPress}
       on:mousedown={handleLineMouseDown}
       data-id={id}
-      bind:this={line.element}
     />
     {#if isHovered}
       <rect
@@ -104,10 +109,14 @@ transform: translateY(-50%);">
         height="10"
         fill="grey"
         cursor="move"
+        role="button"
+        tabindex="0"
         data-handler="left"
         on:mousedown={handleHandlerMouseDown("left")}
       />
       <rect
+        role="button"
+        tabindex="0"
         x={line.x2 - line.x1 - 10}
         y="0"
         width="10"

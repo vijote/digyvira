@@ -2,6 +2,8 @@
     // Entities
     import { EMPTY_ID, ItemType, MemberType } from "../entities/enums";
     import initialTree from "../entities/initialTree";
+    import createMember from "../entities/Member";
+    import createLine from "../entities/Line";
 
     // Stores
     import { movement, resetMovement } from "../stores/movement.store";
@@ -13,9 +15,8 @@
         moveMemberById,
         moveHorizontalLineByHandler,
         moveVerticalLineByHandler,
-        addLine,
-        addMember,
-    } from "../stores/itemList.store";
+        addItem,
+    } from "../stores/tree.store";
 
     // Lifecycle methods
     import { onMount } from "svelte";
@@ -32,31 +33,31 @@
     import Footer from "./Footer.svelte";
 
     function addHorizontalLine() {
-        addLine({
-            x1: 20,
-            x2: 200,
-            y1: 20,
-            y2: 20,
+        addItem(createLine({
+            x1: 1,
+            x2: 7,
+            y1: 1,
+            y2: 1,
             type: ItemType.HorizontalLine,
-        });
+        }));
     }
 
     function addVerticalLine() {
-        addLine({
-            x1: 20,
-            x2: 20,
-            y1: 20,
-            y2: 100,
+        addItem(createLine({
+            x1: 1,
+            x2: 1,
+            y1: 1,
+            y2: 3,
             type: ItemType.VerticalLine,
-        });
+        }));
     }
 
-    function addNewMember() {
-        addMember({
+    function addMember() {
+        addItem(createMember({
             type: MemberType.Female,
-            x: 0,
-            y: 0,
-        });
+            x: 1,
+            y: 1
+        }));
     }
 
     function handleMouseMove(/** @type {MouseEvent} */ event) {
@@ -90,7 +91,7 @@
 <BodyHandler />
 
 <div class="drag-box">
-    <DragIcon onClick={addNewMember}>
+    <DragIcon onClick={addMember}>
         <FemaleIcon onClick={() => {}} onMouseDown={() => {}} />
     </DragIcon>
     <DragIcon onClick={addHorizontalLine}>
@@ -116,11 +117,6 @@
 <Footer/>
 
 <style>
-    ::selection {
-        background-color: transparent;
-        color: inherit;
-    }
-
     .drag-box {
         /* position */
         position: fixed;

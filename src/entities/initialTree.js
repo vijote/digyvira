@@ -1,60 +1,10 @@
-import { ItemType, MemberType } from "./enums";
+import createMember from "./Member";
+import { FEMALE_NAME, ItemType, MALE_NAME, MemberType } from "./enums";
 
 /**
- * @typedef NewMember
- * @property {number} x
- * @property {number} y
- * @property {string} type
+ * @returns {[UUID, import("./Line").Line]}
  */
-
-/**
- * @typedef NewLine
- * @property {number} x1
- * @property {number} x2
- * @property {number} y1
- * @property {number} y2
- * @property {string} type
- */
-
-/**
- * @typedef MemberData
- * @property {string} type
- * @property {number} x
- * @property {number} y
- */
-
-/**
- * @typedef LineData
- * @property {number} x1
- * @property {number} x2
- * @property {number} y1
- * @property {number} y2
- * @property {string} type
- */
-
-/**
- * @typedef NewItem
- * @property {string} itemType
- * @property {object} data
- */
-
-/**
- * @typedef {NewItem & { id: `${string}-${string}-${string}-${string}-${string}` }} StoredItem
- */
-
-/**
- * @typedef {StoredItem & { data: MemberData }} StoredMember
- */
-
-/**
- * @typedef {StoredItem & { data: LineData }} StoredLine
- */
-
-
-/**
- * @returns {[`${string}-${string}-${string}-${string}-${string}`, StoredLine]}
- */
-function createLine(/** @type {NewLine} */ newLine) {
+function createLine(/** @type {LineData} */ newLine) {
     const id = crypto.randomUUID();
 
     return [
@@ -68,26 +18,6 @@ function createLine(/** @type {NewLine} */ newLine) {
                 x2: newLine.x2 * 20,
                 y1: newLine.y1 * 20,
                 y2: newLine.y2 * 20
-            } 
-        }
-    ]
-}
-
-/**
- * @returns {[`${string}-${string}-${string}-${string}-${string}`, StoredMember]}
- */
-function createMember(/** @type {NewMember} */ newMember) {
-    const id = crypto.randomUUID();
-
-    return [
-        id,
-        {
-            id,
-            itemType: ItemType.Member,
-            data: {
-                type: newMember.type,
-                x: newMember.x * 20,
-                y: newMember.y * 20
             }
         }
     ]
@@ -103,8 +33,8 @@ function createMember(/** @type {NewMember} */ newMember) {
 
 function addPair(/** @type {ParentProps} */ {horizontalPadding, verticalPadding, x, y}) {
     return [
-        createMember({ x, y, type: MemberType.Male }),
-        createMember({ x: x + horizontalPadding, y, type: MemberType.Female }),
+        createMember({ x, y, type: MemberType.Male, name: MALE_NAME }),
+        createMember({ x: x + horizontalPadding, y, type: MemberType.Female, name: FEMALE_NAME }),
         createLine({ type: ItemType.VerticalLine, x1: x + 1, y1: y + 2, x2: x + 1, y2: y + verticalPadding }),
         createLine({ type: ItemType.VerticalLine, x1: x + horizontalPadding + 1, y1: y + 2, x2: x, y2: y + verticalPadding  }),
         createLine({ type: ItemType.HorizontalLine, x1: x + 1, y1: y + verticalPadding, x2: x + horizontalPadding + 1, y2: y + verticalPadding }),
@@ -123,8 +53,7 @@ function addParents(/** @type {number} */ x, /** @type {number} */ y) {
     return addPair({ horizontalPadding: 20, verticalPadding: 6, x, y});
 }
 
-/** @type {Map<`${string}-${string}-${string}-${string}-${string}`, StoredItem>} */
-// @ts-ignore
+/** @type {Map<UUID, import("./Item").default>} */
 export default new Map([
     ...addGreatGrandParents(7, 4),
     ...addGreatGrandParents(17, 4),
@@ -133,7 +62,7 @@ export default new Map([
     ...addGrandParents(10, 11),
     ...addGrandParents(30, 11),
     ...addParents(15, 20),
-    createMember({ x: 25, y: 30, type: MemberType.Male }),
+    createMember({ x: 25, y: 30, type: MemberType.Female, name: FEMALE_NAME }),
     createLine({ type: ItemType.VerticalLine, x1: 11, y1: 8, x2: 11, y2: 11 }),
     createLine({ type: ItemType.VerticalLine, x1: 21, y1: 8, x2: 21, y2: 11 }),
     createLine({ type: ItemType.VerticalLine, x1: 31, y1: 8, x2: 31, y2: 11 }),
