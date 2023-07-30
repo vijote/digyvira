@@ -116,3 +116,15 @@ export const moveVerticalLineByHandler = (/** @type {{x: number, y: number, id: 
         return currentTree;
     });
 };
+
+export function updateItem(/** @type {UUID} */ id, /** @type {object} */ newData) {
+    tree.update((currentTree) => {
+        const item = currentTree.get(id);
+
+        if(!item) throw new Error("Ocurrió un error al actualizar el miembro");
+
+        currentTree.set(id, {...item, data: {...item.data, ...newData}})
+
+        return currentTree;
+    })
+}

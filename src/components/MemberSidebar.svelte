@@ -1,91 +1,57 @@
 <script>
-    import { MemberType } from "../entities/enums";
-    import { changeMemberType } from "../stores/tree.store";
-    import { resetSelection, selection } from "../stores/selection.store";
-    import FemaleIcon from "./icons/FemaleIcon.svelte";
-    import MaleIcon from "./icons/MaleIcon.svelte";
+    import { MemberSidebar } from "../entities/enums";
+    import { selection } from "../stores/selection.store";
+    import MemberDataSidebar from "./MemberDataSidebar.svelte";
+    import MemberTypeSidebar from "./MemberTypeSidebar.svelte";
 
-    function setTypeToFemale() {
-        changeMemberType($selection.id, MemberType.Female);
-        resetSelection();
+    let sidebar = MemberSidebar.Data;
+
+    const SidebarComponents = {
+        [MemberSidebar.Data]: MemberDataSidebar,
+        [MemberSidebar.Type]: MemberTypeSidebar
     }
 
-    function setTypeToMale() {
-        changeMemberType($selection.id, MemberType.Male);
-        resetSelection();
+    function setDataSidebar() {
+        sidebar = MemberSidebar.Data;
+    }
+
+    function setTypeSidebar() {
+        sidebar = MemberSidebar.Type;
     }
 </script>
 
-<h3 class="title">Datos</h3>
-<form class="data-form" action="">
-    <label for="fullName">Nombre completo</label>
-    <input class="data-input" type="text" name="fullName">
-    <label for="birthDate">Fecha de nacimiento</label>
-    <input class="data-input" type="date" name="birthDate">
-    <label for="deathDate">Fecha de fallecimiento</label>
-    <input class="data-input" type="date" name="deathDate">
-    <input class="button submit-button" type="submit" value="Actualizar">
-</form>
-
-<h3 class="title">Cambiar tipo</h3>
-<div class="type-container">
-    <FemaleIcon onClick={setTypeToFemale} onMouseDown={() => {}}/>
-    <MaleIcon onClick={setTypeToMale} onMouseDown={() => {}}/>
+<div class="tab-group">
+    <button class="tab" class:active={sidebar === MemberSidebar.Data} on:click={setDataSidebar}>Datos</button>
+    <button class="tab" class:active={sidebar === MemberSidebar.Type} on:click={setTypeSidebar}>Tipo</button>
 </div>
 
+<svelte:component this={SidebarComponents[sidebar]} member={$selection}/>
+
 <style>
-    .title {
-        margin: 0;
-        margin-bottom: 2rem;
-    }
-
-    .type-container {
-        display: grid;
-        max-width: 200px;
-        grid-template-columns: 1fr 1fr;
-        column-gap: 1rem;
-    }
-
-    .data-form {
-        display: flex;
-        flex-direction: column;
-        margin-bottom: 2rem;
-    }
-
-    .data-form input {
-        margin-bottom: 1rem;
-    }
-
-    .data-form label {
-        margin-bottom: 0.25rem;
-    }
-
-    .data-form input:nth-of-type(3) {
-        margin-bottom: 2.25rem;
-    }
-
-    .data-input {
-        background-color: transparent;
-        padding: 0.25rem;
-        border-radius: 5px;
-        border: 1px solid grey;
-    }
-
-    .button {
+    .tab {
         all: unset;
-        cursor: pointer;
-        padding: 0.35rem 1rem;
+        padding: 0.25rem 0.5rem;
+        background-color: #eae8ce;
         border-radius: 5px;
-        box-shadow: 1px 2px 5px rgba(0, 0, 0, 0.25);
-        font-weight: bold;
+        cursor: pointer;
     }
 
-    .button:focus {
+    .tab:hover:not(.active) {
+        background-color: #fbf0c6;
+        transition: all ease-in 0.15s;
+    }
+
+    .active {
+        background-color: #eed782;
+    }
+
+    .tab:focus {
         outline: revert;
     }
 
-    .submit-button {
-        background-color: rgb(255, 239, 167);
-        text-align: center;
+    .tab-group {
+        display: flex;
+        column-gap: 0.25rem;
+        margin-bottom: 1rem;
     }
 </style>

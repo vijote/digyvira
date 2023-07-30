@@ -10,7 +10,8 @@
 
 <style>
     .sidebar {
-        padding: 2rem 1rem;
+        padding: 1rem;
+        z-index: 4;
         position: fixed;
         top: 50%;
         right: 0;

@@ -2,7 +2,10 @@
   import { EMPTY_ID, ItemType, MemberType } from "../entities/enums";
   import { setMovement } from "../stores/movement.store";
   import { selectItem } from "../stores/selection.store";
+    import Baby from "./icons/Baby.svelte";
+    import Cross from "./icons/Cross.svelte";
   import FemaleIcon from "./icons/FemaleIcon.svelte";
+    import Job from "./icons/Job.svelte";
   import MaleIcon from "./icons/MaleIcon.svelte";
 
   /**  @type {MemberData} */
@@ -59,10 +62,60 @@
     onMouseDown={handleMouseDown}
     onClick={handleClick}
   />
-  <span class="member-name">{data.name}</span>
+  <span class="member-name">
+    {#if data.fullName}
+      <span class="data-span">{data.fullName}</span>
+    {/if}
+
+    <span class="data-span">
+      {#if data.birthDay || data.birthMonth || data.birthYear}
+        <Baby/>
+      {/if}
+      {#if data.birthDay}
+        {data.birthDay}
+      {/if}
+  
+      {#if data.birthMonth}
+        {data.birthMonth}
+      {/if}
+  
+      {#if data.birthYear}
+        {data.birthYear}
+      {/if}
+    </span>
+
+    <span class="data-span">
+      {#if data.deathDay || data.deathMonth || data.deathYear}
+        <Cross/>
+      {/if}
+      {#if data.deathDay}
+        {data.deathDay}
+      {/if}
+  
+      {#if data.deathMonth}
+        {data.deathMonth}
+      {/if}
+  
+      {#if data.deathYear}
+        {data.deathYear}
+      {/if}
+    </span>
+
+    <span class="data-span">
+      {#if data.profession}
+        <Job/> {data.profession}
+      {/if}
+    </span>
+  </span>
 </div>
 
 <style>
+  .data-span {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
   .member {
     width: 40px;
     height: 40px;
@@ -70,17 +123,14 @@
     cursor: pointer;
   }
 
-  .member:hover .member-name {
-    /* display: inline-block; */
-  }
-
   .member-name {
     /* positioning */
+    cursor: text;
     position: relative;
     top: -60%;
     left: 225%;
     transform: translate(-50%, -50%);
-    z-index: 4;
+    z-index: 1;
 
     /* style */
     display: inline-block;

@@ -26,3 +26,13 @@ export const MemberType = {
     Male: 'male',
     Female: 'female'
 }
+
+/**
+ * Possible Member Sidebars
+ * @readonly
+ * @enum {string}
+ */
+export const MemberSidebar = {
+    Data: 'data',
+    Type: 'type'
+}

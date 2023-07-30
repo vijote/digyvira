@@ -3,11 +3,24 @@
  */
 
 /**
+ * @typedef SelectedItem
+ * @property {UUID} id
+ * @property {string} type
+ */
+
+/**
  * @typedef MemberData
  * @property {string} type
- * @property {string} name
  * @property {number} x
  * @property {number} y
+ * @property {string | undefined} fullName
+ * @property {string | undefined} birthYear
+ * @property {string | undefined} birthMonth
+ * @property {string | undefined} birthDay
+ * @property {string | undefined} deathDay
+ * @property {string | undefined} deathMonth
+ * @property {string | undefined} deathYear
+ * @property {string | undefined} profession
  */
 
 /**

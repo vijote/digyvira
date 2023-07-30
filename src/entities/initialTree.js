@@ -33,8 +33,26 @@ function createLine(/** @type {LineData} */ newLine) {
 
 function addPair(/** @type {ParentProps} */ {horizontalPadding, verticalPadding, x, y}) {
     return [
-        createMember({ x, y, type: MemberType.Male, name: MALE_NAME }),
-        createMember({ x: x + horizontalPadding, y, type: MemberType.Female, name: FEMALE_NAME }),
+        createMember({
+            x, y, type: MemberType.Male, fullName: MALE_NAME,
+            birthDay: undefined,
+            deathDay: undefined,
+            profession: undefined,
+            birthYear: undefined,
+            birthMonth: undefined,
+            deathMonth: undefined,
+            deathYear: undefined
+        }),
+        createMember({
+            x: x + horizontalPadding, y, type: MemberType.Female, fullName: FEMALE_NAME,
+            birthDay: undefined,
+            deathDay: undefined,
+            profession: undefined,
+            birthYear: undefined,
+            birthMonth: undefined,
+            deathMonth: undefined,
+            deathYear: undefined
+        }),
         createLine({ type: ItemType.VerticalLine, x1: x + 1, y1: y + 2, x2: x + 1, y2: y + verticalPadding }),
         createLine({ type: ItemType.VerticalLine, x1: x + horizontalPadding + 1, y1: y + 2, x2: x, y2: y + verticalPadding  }),
         createLine({ type: ItemType.HorizontalLine, x1: x + 1, y1: y + verticalPadding, x2: x + horizontalPadding + 1, y2: y + verticalPadding }),
@@ -62,7 +80,16 @@ export default new Map([
     ...addGrandParents(5, 12),
     ...addGrandParents(35, 12),
     ...addParents(13, 20),
-    createMember({ x: 28, y: 28, type: MemberType.Female, name: FEMALE_NAME }),
+    createMember({
+        x: 28, y: 28, type: MemberType.Female, fullName: FEMALE_NAME,
+        birthDay: undefined,
+        deathDay: undefined,
+        profession: undefined,
+        birthYear: undefined,
+        birthMonth: undefined,
+        deathMonth: undefined,
+        deathYear: undefined
+    }),
     createLine({ type: ItemType.VerticalLine, x1: 6, y1: 9, x2: 11, y2: 12 }),
     createLine({ type: ItemType.VerticalLine, x1: 21, y1: 9, x2: 21, y2: 12 }),
     createLine({ type: ItemType.VerticalLine, x1: 36, y1: 9, x2: 31, y2: 12 }),

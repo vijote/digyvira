@@ -9,7 +9,7 @@ export const movement = writable({
     offsetY: 0,
     offsetX: 0,
     id: EMPTY_ID,
-    itemType: null,
+    itemType: EMPTY_ID,
     handlerSelected: EMPTY_ID
 });
 
@@ -23,7 +23,7 @@ export function resetMovement() {
         offsetY: 0,
         offsetX: 0,
         id: EMPTY_ID,
-        itemType: null,
+        itemType: EMPTY_ID,
         handlerSelected: EMPTY_ID
     }));
 }
